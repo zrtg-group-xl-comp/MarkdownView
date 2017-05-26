@@ -1,8 +1,13 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '9.0'
+use_frameworks!
 
 target 'Example' do
-  use_frameworks!
 
   pod 'MarkdownView', path: '../'
+
+  target 'ExampleTests' do
+    inherit! :search_paths
+    pod 'FBSnapshotTestCase'
+  end
 end

@@ -3,6 +3,9 @@ import MarkdownView
 
 class Example1ViewController: UIViewController {
 
+  //Just for unit testing
+  public var onMarkdownRendered: (() -> Void)?
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -19,7 +22,16 @@ class Example1ViewController: UIViewController {
     let url = URL(fileURLWithPath: path)
     let markdown = try! String(contentsOf: url, encoding: String.Encoding.utf8)
     mdView.load(markdown: markdown)
+    mdView.onRendered = { [weak self] _ in
+      self?.onMarkdownRendered?()
+    }
 
+  }
+
+  static func make() -> Example1ViewController {
+    return UIStoryboard(
+      name: "Main", bundle: nil
+    ).instantiateViewController(withIdentifier: "Example1") as! Example1ViewController
   }
 
 }

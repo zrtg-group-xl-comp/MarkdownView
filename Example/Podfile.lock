@@ -1,7 +1,13 @@
 PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
   - MarkdownView (1.0.0)
 
 DEPENDENCIES:
+  - FBSnapshotTestCase
   - MarkdownView (from `../`)
 
 EXTERNAL SOURCES:
@@ -9,8 +15,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  FBSnapshotTestCase: '094f9f314decbabe373b87cc339bea235a63e07a'
   MarkdownView: 1966bd5de6b99a6dfb32a58dfdf460f213d2456e
 
-PODFILE CHECKSUM: 352da5fd33f4acfbd6b8b659dc68983f20146489
+PODFILE CHECKSUM: ce1fb1cafd6a37c7ed6c7c20ea73bfd80b6c1710
 
 COCOAPODS: 1.2.1
