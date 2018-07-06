@@ -3,7 +3,7 @@ import WebKit
 
 open class MarkdownView: UIView {
 
-  private var webView: WKWebView?
+  public  var webView: WKWebView?
 
   public var isScrollEnabled: Bool = true {
 
@@ -14,6 +14,8 @@ open class MarkdownView: UIView {
   }
 
   public var onTouchLink: ((URLRequest) -> Bool)?
+   /// 点击图片回调
+  public var onTouchClick:((String)->Void)?
 
   public var onRendered: ((CGFloat) -> Void)?
 
@@ -57,7 +59,6 @@ open class MarkdownView: UIView {
 
       let configuration = WKWebViewConfiguration()
       configuration.userContentController = controller
-
       let wv = WKWebView(frame: self.bounds, configuration: configuration)
       wv.scrollView.isScrollEnabled = self.isScrollEnabled
       wv.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +98,6 @@ extension MarkdownView: WKNavigationDelegate {
   }
 
   public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-
     switch navigationAction.navigationType {
     case .linkActivated:
       if let onTouchLink = onTouchLink, onTouchLink(navigationAction.request) {
@@ -106,9 +106,15 @@ extension MarkdownView: WKNavigationDelegate {
         decisionHandler(.cancel)
       }
     default:
-      decisionHandler(.allow)
+        ///如果是点击图片，不让跳转新的网页
+        if (navigationAction.request.url?.absoluteString.hasPrefix("tsimage:"))! {
+            self.onTouchClick?(navigationAction.request.url?.absoluteString ?? "")
+             decisionHandler(.cancel)
+        } else {
+            decisionHandler(.allow)
+        }
     }
-
   }
-
 }
+
+
